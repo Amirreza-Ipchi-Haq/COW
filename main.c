@@ -19,7 +19,7 @@ void discard(char *array,char times,FILE *file){
 	return;
 }
 void appendCode(char command){
-	if(code)
+	if(lenCode)
 		code=realloc(code,lenCode+1);
 	else
 		code=malloc(1);
@@ -165,7 +165,7 @@ int main(int argc,char** argv){
 	if(!lenCode&&isatty(0)){//(shell mode)
 		printf("Entered shell-mode!");//Notify
 		while(1)
-			printf("\n>>> "),read0(stdin),execute();//Prompt
+			printf("\n>>> "),read0(stdin),execute(),codeLocation=0;//Prompt
 	}else if(!lenCode)
 		read0(stdin);
 	execute(),free(code),free(pointer),fclose(input);
