@@ -1,6 +1,5 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include<string.h>
 #ifdef _WIN32
 #include<io.h>
 #define isatty _isatty
@@ -18,6 +17,9 @@ void discard(char *array,char times,FILE *file){
 		array[0]=array[1],array[1]=array[2],array[2]=getc(file);
 	return;
 }
+char check(char *c,char *c0){
+	return c[0]==c0[0]&&c[1]==c0[1]&&c[2]==c0[2];
+}
 void appendCode(char command){
 	if(lenCode)
 		code=realloc(code,lenCode+1);
@@ -29,31 +31,31 @@ void appendCode(char command){
 void read0(FILE *file){
 	if(lenCode)
 		free(code),lenCode=0;
-	char command[4];
-	for(command[3]=0,discard(command,3,file);file==stdin&&isatty(0)?command[2]!='\n':!feof(file);discard(command,1,file))
-		if(!strcmp(command,"moo"))
+	char command[3];
+	for(discard(command,3,file);file==stdin&&isatty(0)?command[2]!='\n':!feof(file);discard(command,1,file))
+		if(check(command,"moo"))
 			appendCode(0),discard(command,2,file);
-		else if(!strcmp(command,"mOo"))
+		else if(check(command,"mOo"))
 			appendCode(1),discard(command,2,file);
-		else if(!strcmp(command,"moO"))
+		else if(check(command,"moO"))
 			appendCode(2),discard(command,2,file);
-		else if(!strcmp(command,"mOO"))
+		else if(check(command,"mOO"))
 			appendCode(3),discard(command,2,file);
-		else if(!strcmp(command,"Moo"))
+		else if(check(command,"Moo"))
 			appendCode(4),discard(command,2,file);
-		else if(!strcmp(command,"MOo"))
+		else if(check(command,"MOo"))
 			appendCode(5),discard(command,2,file);
-		else if(!strcmp(command,"MoO"))
+		else if(check(command,"MoO"))
 			appendCode(6),discard(command,2,file);
-		else if(!strcmp(command,"MOO"))
+		else if(check(command,"MOO"))
 			appendCode(7),discard(command,2,file);
-		else if(!strcmp(command,"OOO"))
+		else if(check(command,"OOO"))
 			appendCode(8),discard(command,2,file);
-		else if(!strcmp(command,"MMM"))
+		else if(check(command,"MMM"))
 			appendCode(9),discard(command,2,file);
-		else if(!strcmp(command,"OOM"))
+		else if(check(command,"OOM"))
 			appendCode(10),discard(command,2,file);
-		else if(!strcmp(command,"oom"))
+		else if(check(command,"oom"))
 			appendCode(11),discard(command,2,file);
 	return;
 }
