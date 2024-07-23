@@ -8,6 +8,7 @@
 #include<unistd.h>
 #define STDIN "/dev/tty"
 #endif
+#define CHECK(c,c0) (c[0]==c0[0]&&c[1]==c0[1]&&c[2]==c0[2])
 long long *pointer,copy;
 char *code,isCopied=0,exitCode=0;
 size_t len=1,lenCode=0,codeLocation=0,pointerLocation=0;
@@ -16,9 +17,6 @@ void discard(char *array,char times,FILE *file){
 	while(times--&&(file==stdin&&isatty(0)?array[2]!='\n':!feof(file)))
 		array[0]=array[1],array[1]=array[2],array[2]=getc(file);
 	return;
-}
-char check(char *c,char *c0){
-	return c[0]==c0[0]&&c[1]==c0[1]&&c[2]==c0[2];
 }
 void appendCode(char command){
 	if(lenCode)
@@ -33,29 +31,29 @@ void read0(FILE *file){
 		free(code),lenCode=0;
 	char command[3];
 	for(discard(command,3,file);file==stdin&&isatty(0)?command[2]!='\n':!feof(file);discard(command,1,file))
-		if(check(command,"moo"))
+		if(CHECK(command,"moo"))
 			appendCode(0),discard(command,2,file);
-		else if(check(command,"mOo"))
+		else if(CHECK(command,"mOo"))
 			appendCode(1),discard(command,2,file);
-		else if(check(command,"moO"))
+		else if(CHECK(command,"moO"))
 			appendCode(2),discard(command,2,file);
-		else if(check(command,"mOO"))
+		else if(CHECK(command,"mOO"))
 			appendCode(3),discard(command,2,file);
-		else if(check(command,"Moo"))
+		else if(CHECK(command,"Moo"))
 			appendCode(4),discard(command,2,file);
-		else if(check(command,"MOo"))
+		else if(CHECK(command,"MOo"))
 			appendCode(5),discard(command,2,file);
-		else if(check(command,"MoO"))
+		else if(CHECK(command,"MoO"))
 			appendCode(6),discard(command,2,file);
-		else if(check(command,"MOO"))
+		else if(CHECK(command,"MOO"))
 			appendCode(7),discard(command,2,file);
-		else if(check(command,"OOO"))
+		else if(CHECK(command,"OOO"))
 			appendCode(8),discard(command,2,file);
-		else if(check(command,"MMM"))
+		else if(CHECK(command,"MMM"))
 			appendCode(9),discard(command,2,file);
-		else if(check(command,"OOM"))
+		else if(CHECK(command,"OOM"))
 			appendCode(10),discard(command,2,file);
-		else if(check(command,"oom"))
+		else if(CHECK(command,"oom"))
 			appendCode(11),discard(command,2,file);
 	return;
 }
