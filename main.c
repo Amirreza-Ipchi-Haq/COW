@@ -70,14 +70,14 @@ char switchCase(long long val,char mode){
 	switch(val){
 		case 0:
 			if(codeLocation<2){
-				exitCode=1,fprintf(stderr,"\nError at locaton %u: Missing 'MOO'!\n",codeLocation);
+				exitCode=1,fprintf(stderr,"\nError at locaton %zu: Missing 'MOO'!\n",codeLocation);
 				return 0;
 			}
 			size_t debug=codeLocation;//Save current pointer location for debug purposes
 			codeLocation-=2;//Decrease the pointer indicator value
 			for(size_t i=1;i;codeLocation--)//Go back until reaching a matching `[`
 				if(!codeLocation&&(code[codeLocation]!=7||i>1)){//Halt if there's no matching `[`
-					exitCode=1,fprintf(stderr,"\nError at locaton %u: Missing 'MOO'!\n",debug);
+					exitCode=1,fprintf(stderr,"\nError at locaton %zu: Missing 'MOO'!\n",debug);
 					return 0;
 				}else if(code[codeLocation]==7)//(Matching `[`)
 					i--;
@@ -112,14 +112,14 @@ char switchCase(long long val,char mode){
 		case 7:
 			if(!pointer[pointerLocation]){
 				if(codeLocation+2==lenCode){
-					exitCode=1,fprintf(stderr,"\nError at locaton %u: Missing 'moo'!\n",codeLocation);
+					exitCode=1,fprintf(stderr,"\nError at locaton %zu: Missing 'moo'!\n",codeLocation);
 					return 0;
 				}
 				size_t debug=codeLocation;//Save current pointer location for debug purposes
 				codeLocation+=2;//Increase the pointer indicator value
 				for(size_t i=1;i;codeLocation++)//Skip part of the code until reaching a matching `]`
 					if(codeLocation+1==lenCode&&(code[codeLocation]!=0||i>1)){//Halt if there's no matching `]`
-						exitCode=1,fprintf(stderr,"\nError at locaton %u: Missing 'moo'!\n",debug);
+						exitCode=1,fprintf(stderr,"\nError at locaton %zu: Missing 'moo'!\n",debug);
 						return 0;
 					}else if(code[codeLocation]==7)//(Nested `[`)
 						i++;
